@@ -9,26 +9,11 @@ var passport = require('passport');
 var session = require('express-session');
 //var fs = require('fs');
 var logger = require('morgan');                     //HTTP request logger - will show requests in Command Prompt
-
-
-var config = require('./config');
-
-// Load environment
-const _ENV_NAME = process.env.NAME || 'development';
-config = config[_ENV_NAME];
-
-// Mongoose Connection
-mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUrl);
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    // we're connected!
-    console.log("Connected correctly to server");
-});
+var cors = require('cors');
 
 var app = express();
+
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
