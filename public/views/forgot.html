@@ -1,0 +1,114 @@
+<!-- WIDGETS -->
+
+<style type="text/css">
+    html,body {
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+        height: 100%;
+        background: linear-gradient(to right, white, #2196F3);
+    }
+</style>
+
+<div style="display: block; width: 28%; margin: 0 auto; z-index: 100;" class="w3-animate-top" ng-if="message">
+	<div class="alert alert-warning alert-with-icon" data-notify="container" style="position: fixed; margin-top: 100px; width: 400px; text-align: center;">
+		<i data-notify="icon" class="material-icons">info_outline</i>
+		<span data-notify="message">{{message}}</span>
+	</div>
+</div>
+
+<div>
+    <div class="row">
+
+        <div class="col-md-6" style="margin: 0 auto;">
+			<!-- FORGOT PSW -->
+			<div style="margin-top:30%; text-align: center; background: white;">
+               
+                <div class="row" ng-show="which_one == 2">
+                    <div class="col-sm-1">&nbsp;</div>
+                    <form id="login-validation2" class="col-md-10" ng-submit="doForget()" style="padding-top: 30px; padding-bottom: 30px;">
+						<h3>Enter your Username</h3>
+                        <div id="login-form2">
+                            <div class="pad20A">
+
+                                <div class="form-group">
+                                    
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon addon-inside bg-white font-primary" style="border-color: white;">
+                                            <i class="material-icons" style="color: #999;">person_outline</i>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="Enter Username" ng-model="forgetData.user_name" required style="border-color: white; border-bottom-color: #ccc;">
+                                    </div>
+									<br>
+									<input ng-disabled="!login_button" type="submit" class="btn" value="Send" style="border-radius: 50px; width: 100%; background: #33b5e5; color: white;">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+               
+                <div class="row" ng-show="which_one == 3">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <form id="login-validation3" class="col-md-8" ng-submit="doVerify()" style="padding-top: 30px; padding-bottom: 30px;">
+						<span>Enter the 4-digit one time password we have sent you on</span><br>
+						<span style="font-size: 20px; color: #888;">{{responseReset.contact}}</span>
+                        <div id="login-form3">
+                            <div class="pad20A">
+
+                                <div class="form-group" style="margin-top: 30px;">
+                                    
+                                    <div class="input-group input-group-lg col-md-12 row" style="text-align: center; margin: 0 auto;">
+                                        <input class="form-control col-md-3" type="string" ng-model="OTPdata[0]" maxlength="1" style="border-color: white; border-bottom: 2px solid #33b5e5; text-align: center; margin: 7px;">
+                                        <input class="form-control col-md-3" type="string" ng-model="OTPdata[1]" maxlength="1" style="border-color: white; border-bottom: 2px solid #33b5e5; text-align: center; margin: 7px;">
+                                        <input class="form-control col-md-3" type="string" ng-model="OTPdata[2]" maxlength="1" style="border-color: white; border-bottom: 2px solid #33b5e5; text-align: center; margin: 7px;">
+                                        <input class="form-control col-md-3" type="string" ng-model="OTPdata[3]" maxlength="1" style="border-color: white; border-bottom: 2px solid #33b5e5; text-align: center; margin: 7px;">
+                                    </div>
+									<br>
+									
+									<div class="form-group col-xs-12 col-sm-12 col-md-4" style="margin: 0 auto; padding-top: 20px;">
+										<input type="submit" class="btn" value="OK" style="border-radius: 50px; width: 100%; background: #33b5e5; color: white;" ng-disabled="!OTPdata[0] || !OTPdata[1] || !OTPdata[2] || !OTPdata[3]">
+									</div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+               
+                <div class="row" ng-show="which_one == 4">
+                    <div class="col-sm-1">&nbsp;</div>
+                    <form id="login-validation4" class="col-md-10" ng-submit="doNew()" style="padding-top: 30px; padding-bottom: 30px;">
+						<h3>Enter NEW Password</h3>
+                        <div id="login-form4" style="padding-top: 30px;">
+                            <div class="pad20A">
+
+                                <div class="form-group">
+                                    
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon addon-inside bg-white font-primary" style="border-color: white;">
+                                            <i class="material-icons" style="color: #999;">vpn_key</i>
+                                        </span>
+                                        <input type="password" class="form-control" placeholder="Enter a password" ng-model="resetData.password" required style="border-color: white; border-bottom-color: #ccc;">
+                                    </div>
+                                    
+                                    <div class="input-group input-group-lg" style="margin-top: 10px;">
+                                        <span class="input-group-addon addon-inside bg-white font-primary" style="border-color: white;">
+                                            <i class="material-icons" style="color: #999;">vpn_key</i>
+                                        </span>
+                                        <input type="password" class="form-control" placeholder="Confirm password" ng-model="resetData.password2" required style="border-color: white; border-bottom-color: #ccc;">
+                                    </div>
+									<br>
+									<input ng-disabled="!login_button" type="submit" class="btn" value="Send" style="border-radius: 50px; width: 100%; background: #33b5e5; color: white;">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+				
+            </div>
+		</div>
+    </div>
+</div>

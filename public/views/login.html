@@ -1,0 +1,76 @@
+<!-- WIDGETS -->
+
+<style type="text/css">
+    html,body {
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+        height: 100%;
+        background: linear-gradient(to right, white, #2196F3);
+    }
+</style>
+
+<div style="display: block; width: 28%; margin: 0 auto; z-index: 100;" class="w3-animate-top" ng-if="message">
+	<div class="alert alert-warning alert-with-icon" data-notify="container" style="position: fixed; margin-top: 100px; width: 400px; text-align: center;">
+		<i data-notify="icon" class="material-icons">info_outline</i>
+		<span data-notify="message">{{message}}</span>
+	</div>
+</div>
+
+<div>
+    <div class="row">
+
+        <div class="col-md-6" style="margin: 0 auto;">
+			<!-- LOGIN -->
+            <div style="margin-top:20%; text-align: center; background: white;">
+               <br><img src="./images/logo.svg" width="300px"><br>
+				
+                <div class="row" style="margin: 0 auto; padding: 15px;">
+					
+                    <form id="login-validation" class="col-md-10" ng-submit="doLogin()" style="margin: 0 auto;">
+                        <div id="login-form">
+                            <div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12">
+                                    
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon addon-inside bg-white font-primary" style="border-color: white;">
+                                            <i class="material-icons" style="color: #999;">person_outline</i>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="Enter Username" ng-model="loginData.username" required style="border-color: white; border-bottom-color: #ccc;">
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon addon-inside bg-white font-primary" style="border-color: white;">
+                                            <i class="material-icons" style="color: #999;">vpn_key</i>
+                                        </span>
+                                        <input type="password" class="form-control" placeholder="Enter Password" ng-model="loginData.password" required style="border-color: white; border-bottom-color: #ccc;">
+                                    </div>
+                                </div>
+                                
+								<div class="col-md-12 row">
+									<div class="form-group col-xs-12 col-sm-12 col-md-4" style="margin: 0 auto; padding-top: 20px;">
+										<input ng-disabled="!login_button" type="submit" class="btn" value="Login" style="border-radius: 50px; width: 100%; background: #33b5e5; color: white;">
+									</div>
+									<div class="col-md-12" style="text-align: center;">
+										<a ui-sref="forgotPSW" style="margin: 0 auto; color: #aaa; font-size: 15px;">
+											<span>Forgot Password?</span>
+										</a>
+									</div>
+								</div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+				
+            </div>
+			<div class="col-md-12" style="background: white; text-align: center; margin-top: 10px; padding: 5px;">
+				<a style="margin: 0 auto; color: #aaa; font-size: 15px;">
+					<span>Don't have an account? <b style="color: black;">Sign Up</b></span>
+				</a>
+			</div>
+        
+		</div>
+    </div>
+</div>

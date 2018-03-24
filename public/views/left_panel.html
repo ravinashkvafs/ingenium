@@ -1,0 +1,45 @@
+<style>
+	.bg-tab {
+		background-color: white;
+	}
+</style>
+<div id="page-sidebar">
+			
+	<div class="scroll-sidebar">
+		<div class="col-md-12">
+			<div class="avatar-circle avatar-big" style="margin: 25px auto; height: 120px; width: 120px; background: #FB8C00; top: -50px;" ng-show="!user_data.user_info.user.profile_image">
+				<span class="initials ini-big" style="font-size:70px; top: 37px;">{{user_data.user_info.user.first_name[0] + user_data.user_info.user.last_name[0]}}</span>
+			</div>
+
+			<div class="avatar-circle" style="margin: 25px auto;" ng-show="user_data.user_info.user.profile_image">
+				<span>
+					<img src="{{user_data.user_info.user.profile_image}}" style="height: 120px; width: 120px; border-radius: 100%;">
+				</span>
+			</div>
+		</div>
+		
+		<div class="col-md-12" style="text-align: center;">
+			<span style="font-size: 25px;">{{user_data.user_info.user.first_name +' '+ user_data.user_info.user.last_name}}</span>
+		</div>
+
+		<div class="col-md-12">
+			<ul id="sidebar-menu">
+				<li>
+					<a ui-sref="process-steps" ng-class="current_state == 'process-steps' ? 'bg-tab':''">
+						<i class="glyph-icon icon-align-justify"></i>
+						<span>Process Steps</span>
+					</a>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<a ui-sref="reflective-questions" ng-class="current_state == 'reflective-questions' ? 'bg-tab':''">
+						<span style="color: #00C851; margin-left: 8px; margin-right: 4px;" ng-if="percent.reflective_filled"><i class="material-icons">check_circle</i></span>
+						<i class="glyph-icon icon-file" ng-if="!percent.reflective_filled"></i>
+						<span>4 Reflective Questions</span>
+					</a>
+				</li>
+			</ul><!-- #sidebar-menu -->
+		</div>
+
+	</div>
+</div>
