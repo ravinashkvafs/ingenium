@@ -283,13 +283,13 @@
 									<div class="col-md-12 row" style="margin: 3px auto;">
 										<div class="col-md-5" style="margin: auto 0; text-align: right;">Test name (optional)</div>
 										<div class="col-md-7">
-											<input type="text" class="form-control" ng-model="test_name">
+											<input type="text" class="form-control" ng-model="test_name_from_modal">
 										</div>
 									</div>
 									<div class="col-md-12 row" style="margin: 3px auto;">
 										<div class="col-md-5" style="margin: auto 0; text-align: right;">Test description (optional)</div>
 										<div class="col-md-7">
-											<textarea class="form-control" ng-model="test_description"></textarea>
+											<textarea class="form-control" ng-model="test_description_from_modal"></textarea>
 										</div>
 									</div>
 								</div>
@@ -319,7 +319,7 @@
 								</tr>
 							</thead>
 							<tbody ng-repeat="tests in listH.result">
-								<tr ng-repeat="h in tests" class="bg_row" ng-click="testRowClick(h.test_id, h.test_type)">
+								<tr ng-repeat="h in tests" class="bg_row" ng-click="testRowClick(h.test_id, h.test_type, h.test_name)">
 									<td>{{h.test_id}}</td>
 									<td>{{h.test_name}}</td>
 									<td>{{h.class_name}}</td>
@@ -363,6 +363,7 @@
 						<div class="modal-dialog" role="document" ng-show="!addQuestion">
 							<div class="modal-content">
 								<div class="modal-header text-center">
+									<a href="" ng-click="batchPage = !batchPage;" style="margin: 5px 0px;" ng-show="batchPage">Back</a>
 									<h4 class="modal-title w-100 font-weight-bold" ng-show="!batchPage">Other details</h4>
 									<h4 class="modal-title w-100 font-weight-bold" ng-show="batchPage">Batches</h4>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -380,7 +381,7 @@
 											<input type="datetime-local" class="form-control" ng-model="dueDate">
 										</div>
 									</div>
-									<div class="col-md-12 row" style="margin: 3px auto;" ng-show="!batchPage && structureBatch.test_type != 'homework_draft' && structureBatch.test_type == 'live test'">
+									<div class="col-md-12 row" style="margin: 3px auto;" ng-show="!batchPage && structureBatch.test_type != 'homework_draft'">
 										<div class="col-md-offset-1 col-md-3" style="margin: auto 0; text-align: center;">Duration</div>
 										<div class="col-md-7">
 											<input type="datetime-local" class="form-control" ng-model="durationD">
@@ -393,7 +394,7 @@
 										</div>
 									</div>
 									<div class="col-md-12 row" style="margin: 3px auto;" ng-show="batchPage">
-										<div class="col-md-12 row" style="text-align: center;">
+										<div class="col-md-12 row" style="text-align: center;" ng-click="checkBatchFill()">
 											<div class="col-md-6" style="margin: 0 auto;">
 												<div class="col-md-12" ng-repeat="s in batches.result" ng-show="!s.bool" style="padding: 5px; background: #ffebee;" ng-click="s.bool = !s.bool">
 													{{s.batch_name}}
@@ -408,25 +409,29 @@
 									</div>
 								</div>
 								<div class="modal-footer d-flex justify-content-center">
-									<button class="btn btn-info" ng-click="batchPage = !batchPage" style="border-radius: 20px;" ng-show="!batchPage">Next</button>
-									<button class="btn btn-info" data-dismiss="modal" ng-click="batchPage = !batchPage; submitBatches();" style="border-radius: 20px;" ng-show="batchPage">Send</button>
+									<button class="btn btn-info" ng-click="batchPage = !batchPage" style="border-radius: 20px;" ng-show="!batchPage" ng-disabled="!checkConditionToProceed()">Next</button>
+									<button class="btn btn-info" data-dismiss="modal" ng-click="batchPage = !batchPage; submitBatches();" style="border-radius: 20px; margin: 5px 0px;" ng-show="batchPage" ng-disabled="structureBatch.batch_array.length == 0">Send</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					
 					<div class="col-md-12" style="border: 1px solid lightgrey; color: #4285F4; padding: 10px 30px; margin: 5px; width: 100%;" ng-show="!addQuestion">
-						Preview - {{testRowSelected}}
+						Preview
 					</div>
 					<div class="col-md-12" style="border: 1px solid lightgrey; color: #4285F4; padding: 10px 30px; margin: 5px; width: 100%;" ng-show="addQuestion">
 						Add question
 					</div>
 					
 					<div class="col-md-12 row" style="border: 1px solid lightgrey; padding: 10px 30px; margin: 5px; width: 100%;" ng-show="!addQuestion">
+						<div class="col-md-12" style="margin: 15px; text-align: center; font-size: 20px;">
+							{{testRowName}}
+						</div>
+							
 						<div class="col-md-12 row" style="margin: 15px;" ng-repeat="p in previewQ.result">
 							<div class="col-md-6" style="margin: auto 0;">Question {{$index+1}}</div>
 							<div class="col-md-6" style="text-align: right;">
-								<button class="btn btn-info" style="border-radius: 20px;">Edit</button>
+								<button class="btn btn-info" style="border-radius: 20px;" disabled>Edit</button>
 								<button class="btn btn-danger" style="border-radius: 20px;" ng-click="deleteQuestion(p.question_id)">Delete</button>
 							</div>
 							<div class="col-md-12" style="color: #4285F4; margin-top: 10px; margin-bottom: 10px;">
@@ -483,8 +488,8 @@
 						<!-- option A -->
 						<div class="col-md-12 row" style="margin: 20px;">
 							<div class="col-md-1" style="margin: auto 0;">Option A</div>
-							<div class="col-md-5"><input type="text" class="form-control" ng-model="A.text"></div>
-							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="A.image"/></div>
+							<div class="col-md-5"><input type="text" class="form-control" ng-model="A.text" ng-disabled="A.image_url"></div>
+							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="A.image" ng-show="!A.text"/></div>
 							<div class="col-md-1" style="margin: auto 0; text-align: center;"><input type="checkbox" ng-model="A.bool"/></div>
 							<div class="col-md-2" style="margin: auto 0; text-align: center;"><span ng-show="A.bool">Correct option</span></div>
 							<div class="col-md-12" style="text-align: center;"><img ng-src="{{A.image}}" style="width: 200px; height: 200px;" class="img-responsive" ng-show="A.image"/></div>
@@ -493,8 +498,8 @@
 						<!-- option B -->
 						<div class="col-md-12 row" style="margin: 20px;">
 							<div class="col-md-1" style="margin: auto 0;">Option B</div>
-							<div class="col-md-5"><input type="text" class="form-control" ng-model="B.text"></div>
-							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="B.image"/></div>
+							<div class="col-md-5"><input type="text" class="form-control" ng-model="B.text" ng-disabled="B.image_url"></div>
+							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="B.image" ng-show="!B.text"/></div>
 							<div class="col-md-1" style="margin: auto 0; text-align: center;"><input type="checkbox" ng-model="B.bool"/></div>
 							<div class="col-md-2" style="margin: auto 0; text-align: center;"><span ng-show="B.bool">Correct option</span></div>
 							<div class="col-md-12" style="text-align: center;"><img ng-src="{{B.image}}" style="width: 200px; height: 200px;" class="img-responsive" ng-show="B.image"/></div>
@@ -503,8 +508,8 @@
 						<!-- option C -->
 						<div class="col-md-12 row" style="margin: 20px;">
 							<div class="col-md-1" style="margin: auto 0;">Option C</div>
-							<div class="col-md-5"><input type="text" class="form-control" ng-model="C.text"></div>
-							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="C.image"/></div>
+							<div class="col-md-5"><input type="text" class="form-control" ng-model="C.text" ng-disabled="C.image_url"></div>
+							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="C.image" ng-show="!C.text"/></div>
 							<div class="col-md-1" style="margin: auto 0; text-align: center;"><input type="checkbox" ng-model="C.bool"/></div>
 							<div class="col-md-2" style="margin: auto 0; text-align: center;"><span ng-show="C.bool">Correct option</span></div>
 							<div class="col-md-12" style="text-align: center;"><img ng-src="{{C.image}}" style="width: 200px; height: 200px;" class="img-responsive" ng-show="C.image"/></div>
@@ -513,8 +518,8 @@
 						<!-- option D -->
 						<div class="col-md-12 row" style="margin: 20px;">
 							<div class="col-md-1" style="margin: auto 0;">Option D</div>
-							<div class="col-md-5"><input type="text" class="form-control" ng-model="D.text"></div>
-							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="D.image"/></div>
+							<div class="col-md-5"><input type="text" class="form-control" ng-model="D.text" ng-disabled="D.image_url"></div>
+							<div class="col-md-3" style="overflow: hidden; margin: auto 0;"><input type="file" fileinput="file" filepreview="D.image" ng-show="!D.text"/></div>
 							<div class="col-md-1" style="margin: auto 0; text-align: center;"><input type="checkbox" ng-model="D.bool"/></div>
 							<div class="col-md-2" style="margin: auto 0; text-align: center;"><span ng-show="D.bool">Correct option</span></div>
 							<div class="col-md-12" style="text-align: center;"><img ng-src="{{D.image}}" style="width: 200px; height: 200px;" class="img-responsive" ng-show="D.image"/></div>
@@ -534,7 +539,7 @@
 						</div>
 						
 						<div class="col-md-12" style="text-align: center;">
-							<button class="btn btn-info" style="border-radius: 20px;" ng-click="submitAndAddQuestion()">Save & Preview</button>
+							<button class="btn btn-info" style="border-radius: 20px;" ng-click="submitAndAddQuestion()" ng-disabled="!((A.bool || B.bool || C.bool || D.bool) && (A.image_url || A.text) && (B.image_url || B.text) && (C.image_url || C.text) && (D.image_url || D.text) && structureQues.question_text && structureQues.question_solution_text)">Save & Preview</button>
 						</div>
 						<div class="col-md-12" style="text-align: center; margin-bottom: 30px;">
 							<a href="" style="color: grey;" ng-click="addQuestion = false;">Back to Preview</a>

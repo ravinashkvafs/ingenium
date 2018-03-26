@@ -2,8 +2,22 @@
 	.bg-tab {
 		background-color: white;
 	}
+	
+	.footer{
+		bottom: 5%;
+		position: fixed;
+		color: #777;
+		padding: 5px;
+		border-radius: 20px;
+		font-weight: bold;
+	}
+	
+	.footer:hover{
+		background: red;
+		color: white;
+	}
 </style>
-<div id="page-sidebar">
+<div id="page-sidebar" style="height: 100%; position: fixed;">
 			
 	<div class="scroll-sidebar">
 		<div class="col-md-12">
@@ -20,6 +34,15 @@
 		
 		<div class="col-md-12" style="text-align: center;">
 			<span style="font-size: 25px;">{{user_data.user_info.user.first_name +' '+ user_data.user_info.user.last_name}}</span>
+		</div>
+		
+		<div class="col-md-12 row footer" ui-sref="login" ng-click="doLogout()">
+			<div class="col-md-5" style="text-align: right; font-size: 30px;">
+				<i class="material-icons">exit_to_app</i>
+			</div>
+			<div class="col-md-7" style="margin: auto 0; font-size: 20px;">
+				Logout
+			</div>
 		</div>
 
 		<!--<div class="col-md-12">
